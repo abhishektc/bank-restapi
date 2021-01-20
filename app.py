@@ -2,7 +2,6 @@ from flask import Flask
 from flask_restful import Api
 from flask_cors import CORS
 
-from db import db
 from resources.bank import BankListAutoComplete, BankListCity, Bank
 
 app = Flask(__name__)
@@ -11,10 +10,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://postgres:abhishek@localhost:
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'abhishek'
 api = Api(app)
-
-@app.before_first_request
-def create_tables():
-    db.create_all()
 
 api.add_resource(BankListAutoComplete, '/api/branches/autocomplete/<string:name>')
 api.add_resource(BankListCity, '/api/branches/<string:name>')
